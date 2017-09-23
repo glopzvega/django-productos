@@ -26,8 +26,11 @@ def index(request):
 # 	return HttpResponse(template.render(context, request))
 
 def detail(request, product_id):	
-	product = "El producto seleccionado es %s."
-	return HttpResponse(product % product_id)
+	try:
+		producto = Product.objects.get(pk=product_id)
+	except Product.DoesNotExist:
+		raise Http404("El producto no existe.")
+	return render(request, "products/detail.html", {"producto" : producto})	
 
 def ubicaciones(request, product_id):
 	product = "Estas buscando las ubicaciones del producto %s."
