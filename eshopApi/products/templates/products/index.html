@@ -11,7 +11,11 @@
 	<ul>
 		{% for product in products %}			
 
-		<li>{{ product.name }}</li>
+		<li>
+			<a href="{% url 'detail' product.id %}">
+				{{ product.name }}			
+			</a>
+		</li>
 
 		{% endfor %}
 	</ul>
