@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.http import HttpResponse, Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.template import loader
 
 # Create your views here.
@@ -16,6 +16,12 @@ def index(request):
 		"products" : lista_productos
 	}
 	return render(request, "products/index.html", context)
+
+# get_list_or_404 shortcut use Product.objects.filter() instead of Product.objects.get()
+# return 404 if get an empty list
+def filtrados(request):
+	productos = get_list_or_404(Product, name="Cichle")
+	return render(request, "products/index.html", {"products" : productos})	
 
 # def index(request):
 # 	lista_productos = Product.objects.all()
