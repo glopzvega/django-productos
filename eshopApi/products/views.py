@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.http import HttpResponse, Http404
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.template import loader
 
 # Create your views here.
@@ -25,12 +25,17 @@ def index(request):
 # 	}
 # 	return HttpResponse(template.render(context, request))
 
-def detail(request, product_id):	
-	try:
-		producto = Product.objects.get(pk=product_id)
-	except Product.DoesNotExist:
-		raise Http404("El producto no existe.")
+#get_object_or_404 shortcut
+def detail(request, product_id):
+	producto = get_object_or_404(Product, pk=product_id)
 	return render(request, "products/detail.html", {"producto" : producto})	
+
+# def detail(request, product_id):	
+# 	try:
+# 		producto = Product.objects.get(pk=product_id)
+# 	except Product.DoesNotExist:
+# 		raise Http404("El producto no existe.")
+# 	return render(request, "products/detail.html", {"producto" : producto})	
 
 def ubicaciones(request, product_id):
 	product = "Estas buscando las ubicaciones del producto %s."
